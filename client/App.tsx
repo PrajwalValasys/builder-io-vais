@@ -15,6 +15,8 @@ import { store, persistor } from "./store";
 import { ToastContainer } from "react-toastify";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import BuildVAIS from "./pages/BuildVAIS";
 import VAISResults from "./pages/VAISResults";
@@ -63,6 +65,14 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route path="/build-vais" element={<BuildVAIS />} />
                   <Route path="/vais-results" element={<VAISResults />} />
                   <Route path="/abm-lal" element={<ABMLAL />} />
