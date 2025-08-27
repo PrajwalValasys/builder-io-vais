@@ -1,9 +1,9 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../hooks/redux';
-import { logout } from '../store/slices/authSlice';
+import React from "react";
+import { useAppSelector, useAppDispatch } from "../hooks/redux";
+import { logout } from "../store/slices/authSlice";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, CheckCircle } from 'lucide-react';
+import { LogOut, User, CheckCircle } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -19,8 +19,12 @@ const Dashboard: React.FC = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-valasys-gray-900">Dashboard</h1>
-            <p className="text-valasys-gray-600">Welcome back, {user?.email || 'User'}!</p>
+            <h1 className="text-3xl font-bold text-valasys-gray-900">
+              Dashboard
+            </h1>
+            <p className="text-valasys-gray-600">
+              Welcome back, {user?.email || "User"}!
+            </p>
           </div>
           <Button
             onClick={handleLogout}
@@ -43,23 +47,33 @@ const Dashboard: React.FC = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-medium text-valasys-gray-600">Email</label>
-                <p className="text-valasys-gray-900">{user?.email || 'N/A'}</p>
+                <label className="text-sm font-medium text-valasys-gray-600">
+                  Email
+                </label>
+                <p className="text-valasys-gray-900">{user?.email || "N/A"}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-valasys-gray-600">Username</label>
-                <p className="text-valasys-gray-900">{user?.username || 'N/A'}</p>
+                <label className="text-sm font-medium text-valasys-gray-600">
+                  Username
+                </label>
+                <p className="text-valasys-gray-900">
+                  {user?.username || "N/A"}
+                </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-valasys-gray-600">User ID</label>
-                <p className="text-valasys-gray-900">{user?.id || 'N/A'}</p>
+                <label className="text-sm font-medium text-valasys-gray-600">
+                  User ID
+                </label>
+                <p className="text-valasys-gray-900">{user?.id || "N/A"}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-valasys-gray-600">Account Status</label>
+                <label className="text-sm font-medium text-valasys-gray-600">
+                  Account Status
+                </label>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-4 w-4 text-green-500" />
                   <span className="text-green-600 font-medium">
-                    {user?.is_active ? 'Active' : 'Inactive'}
+                    {user?.is_active ? "Active" : "Inactive"}
                   </span>
                 </div>
               </div>
@@ -73,10 +87,12 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center space-x-3">
               <CheckCircle className="h-6 w-6 text-green-600" />
               <div>
-                <h3 className="font-semibold text-green-900">Login Successful!</h3>
+                <h3 className="font-semibold text-green-900">
+                  Login Successful!
+                </h3>
                 <p className="text-green-700">
-                  You have successfully logged in to the VAIS dashboard. 
-                  The Redux Toolkit authentication system is working correctly.
+                  You have successfully logged in to the VAIS dashboard. The
+                  Redux Toolkit authentication system is working correctly.
                 </p>
               </div>
             </div>

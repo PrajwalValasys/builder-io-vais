@@ -77,9 +77,15 @@ const App = () => (
                   <Route path="/vais-results" element={<VAISResults />} />
                   <Route path="/abm-lal" element={<ABMLAL />} />
                   <Route path="/find-prospect" element={<FindProspect />} />
-                  <Route path="/prospect-results" element={<ProspectResults />} />
+                  <Route
+                    path="/prospect-results"
+                    element={<ProspectResults />}
+                  />
                   <Route path="/build-campaign" element={<BuildCampaign />} />
-                  <Route path="/build-my-campaign" element={<BuildMyCampaign />} />
+                  <Route
+                    path="/build-my-campaign"
+                    element={<BuildMyCampaign />}
+                  />
                   <Route
                     path="/campaign-overview/:id"
                     element={<CampaignOverview />}
@@ -89,7 +95,10 @@ const App = () => (
                   <Route path="/users" element={<Users />} />
                   <Route path="/manage-users" element={<Users />} />
                   <Route path="/support" element={<Support />} />
-                  <Route path="/chat-support/:ticketId" element={<ChatSupport />} />
+                  <Route
+                    path="/chat-support/:ticketId"
+                    element={<ChatSupport />}
+                  />
                   <Route path="/faqs" element={<FAQs />} />
                   <Route path="/settings" element={<Settings />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 // Types
 interface User {
@@ -30,12 +30,14 @@ interface LoginResponse {
 }
 
 // API Configuration
-const BACKEND_URL = import.meta.env.VITE_STAGING_BACKEND_URL || 'https://kq0nd3bt-6013.inc1.devtunnels.ms/';
+const BACKEND_URL =
+  import.meta.env.VITE_STAGING_BACKEND_URL ||
+  "https://kq0nd3bt-6013.inc1.devtunnels.ms/";
 const LOGIN_URL = `${BACKEND_URL}login/`;
 
 const apiConfig = {
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 };
 
@@ -49,17 +51,22 @@ const initialState: AuthState = {
 
 // Async thunks
 export const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  "auth/loginUser",
   async (credentials: LoginCredentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post<LoginResponse>(LOGIN_URL, credentials, apiConfig);
-      
+      const response = await axios.post<LoginResponse>(
+        LOGIN_URL,
+        credentials,
+        apiConfig,
+      );
+
       if (response.data.status === 200) {
         if (response.data.data?.is_active) {
           toast.success(response.data.message, { autoClose: 4000 });
           return response.data;
         } else {
-          const message = 'Account is not active contact Admin or Incomplete Email and Phone Verification';
+          const message =
+            "Account is not active contact Admin or Incomplete Email and Phone Verification";
           toast.error(message, { autoClose: 4000 });
           return rejectWithValue(message);
         }
@@ -67,40 +74,40 @@ export const loginUser = createAsyncThunk(
         toast.error(response.data.message, { autoClose: 4000 });
         return rejectWithValue(response.data.message);
       }
-      
-      return rejectWithValue('Login failed');
+
+      return rejectWithValue("Login failed");
     } catch (error: any) {
-      const message = error.response?.data?.message || 'Something went wrong';
+      const message = error.response?.data?.message || "Something went wrong";
       toast.error(message, { autoClose: 4000 });
       return rejectWithValue(message);
     }
-  }
+  },
 );
 
 export const linkedinLogin = createAsyncThunk(
-  'auth/linkedinLogin',
+  "auth/linkedinLogin",
   async (code: string, { rejectWithValue }) => {
     try {
       const LINKEDIN_URL = `${BACKEND_URL}user-accounts/linkedin/`;
       const response = await axios.post(LINKEDIN_URL, { code }, apiConfig);
-      
+
       if (response.data.status === 200) {
-        toast.success('LinkedIn login successful', { autoClose: 4000 });
+        toast.success("LinkedIn login successful", { autoClose: 4000 });
         return response.data;
       }
-      
-      return rejectWithValue('LinkedIn login failed');
+
+      return rejectWithValue("LinkedIn login failed");
     } catch (error: any) {
-      const message = error.response?.data?.message || 'LinkedIn login failed';
+      const message = error.response?.data?.message || "LinkedIn login failed";
       toast.error(message, { autoClose: 4000 });
       return rejectWithValue(message);
     }
-  }
+  },
 );
 
 // Auth slice
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {

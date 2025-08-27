@@ -18,11 +18,11 @@ const Login = () => {
 
   // Redux state
   const { isLoading, isLoggedIn, user } = useAppSelector((state) => state.auth);
-  
+
   // Local state
   const [showPassword, setShowPassword] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
+
   const initialValues = {
     username: "",
     password: "",
@@ -38,7 +38,7 @@ const Login = () => {
     const code = params.get("code");
     if (code) {
       dispatch(linkedinLogin(code)).then((result) => {
-        if (result.meta.requestStatus === 'fulfilled') {
+        if (result.meta.requestStatus === "fulfilled") {
           navigate("/");
         }
       });
@@ -58,13 +58,14 @@ const Login = () => {
 
   const onSubmit = async (values: { username: string; password: string }) => {
     const result = await dispatch(loginUser(values));
-    if (result.meta.requestStatus === 'fulfilled') {
+    if (result.meta.requestStatus === "fulfilled") {
       navigate("/");
     }
   };
 
   // LinkedIn OAuth configuration
-  const clientId = import.meta.env.VITE_CLIENT_ID || process.env.REACT_APP_CLIENT_ID;
+  const clientId =
+    import.meta.env.VITE_CLIENT_ID || process.env.REACT_APP_CLIENT_ID;
   const redirectUri = `${window.location.origin}/login`;
   const linkedinAuthUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=openid,profile,email`;
 
@@ -101,7 +102,7 @@ const Login = () => {
               </p>
             </div>
           </CardHeader>
-          
+
           <CardContent className="space-y-6">
             <Formik
               initialValues={initialValues}
@@ -119,9 +120,14 @@ const Login = () => {
                 <Form className="space-y-4">
                   {/* Email Field */}
                   <div className="space-y-2">
-                    <Label htmlFor="username" className="text-valasys-gray-700 flex items-center space-x-1">
+                    <Label
+                      htmlFor="username"
+                      className="text-valasys-gray-700 flex items-center space-x-1"
+                    >
                       <Mail className="h-3 w-3" />
-                      <span>Email <span className="text-red-500">*</span></span>
+                      <span>
+                        Email <span className="text-red-500">*</span>
+                      </span>
                     </Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-3 h-4 w-4 text-valasys-gray-400" />
@@ -145,9 +151,14 @@ const Login = () => {
 
                   {/* Password Field */}
                   <div className="space-y-2">
-                    <Label htmlFor="password" className="text-valasys-gray-700 flex items-center space-x-1">
+                    <Label
+                      htmlFor="password"
+                      className="text-valasys-gray-700 flex items-center space-x-1"
+                    >
                       <Lock className="h-3 w-3" />
-                      <span>Password <span className="text-red-500">*</span></span>
+                      <span>
+                        Password <span className="text-red-500">*</span>
+                      </span>
                     </Label>
                     <div className="relative">
                       <Lock className="absolute left-3 top-3 h-4 w-4 text-valasys-gray-400" />
