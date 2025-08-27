@@ -39,7 +39,7 @@ const Login = () => {
     if (code) {
       dispatch(linkedinLogin(code)).then((result) => {
         if (result.meta.requestStatus === 'fulfilled') {
-          navigate("/dashboard");
+          navigate("/");
         }
       });
     }
@@ -48,7 +48,7 @@ const Login = () => {
   // Redirect if already logged in and active
   useEffect(() => {
     if (isLoggedIn && user?.is_active) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [isLoggedIn, user, navigate]);
 
@@ -59,7 +59,7 @@ const Login = () => {
   const onSubmit = async (values: { username: string; password: string }) => {
     const result = await dispatch(loginUser(values));
     if (result.meta.requestStatus === 'fulfilled') {
-      navigate("/dashboard");
+      navigate("/");
     }
   };
 
