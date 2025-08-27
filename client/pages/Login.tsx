@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, ErrorMessage } from "formik";
 import { loginValidation } from "../utils/validations";
-import { useDispatch, useSelector } from "react-redux";
 import { loginUser, linkedinLogin } from "../store/slices/authSlice";
-import { RootState, AppDispatch } from "../store";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,11 +13,11 @@ import { Eye, EyeOff, Mail, Lock, ArrowRight, Brain } from "lucide-react";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  
+
   // Redux state
-  const { isLoading, isLoggedIn, user } = useSelector((state: RootState) => state.auth);
+  const { isLoading, isLoggedIn, user } = useAppSelector((state) => state.auth);
   
   // Local state
   const [showPassword, setShowPassword] = useState(false);
