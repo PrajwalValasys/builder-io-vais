@@ -9,8 +9,14 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { TourProvider } from "./contexts/TourContext";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./store";
+import { ToastContainer } from "react-toastify";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import BuildVAIS from "./pages/BuildVAIS";
 import VAISResults from "./pages/VAISResults";
@@ -31,48 +37,80 @@ import Settings from "./pages/Settings";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <ThemeProvider
-    attribute="class"
-    defaultTheme="light"
-    enableSystem={false}
-    forcedTheme="light"
-  >
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <TourProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/build-vais" element={<BuildVAIS />} />
-              <Route path="/vais-results" element={<VAISResults />} />
-              <Route path="/abm-lal" element={<ABMLAL />} />
-              <Route path="/find-prospect" element={<FindProspect />} />
-              <Route path="/prospect-results" element={<ProspectResults />} />
-              <Route path="/build-campaign" element={<BuildCampaign />} />
-              <Route path="/build-my-campaign" element={<BuildMyCampaign />} />
-              <Route
-                path="/campaign-overview/:id"
-                element={<CampaignOverview />}
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={false}
+        forcedTheme="light"
+      >
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <TourProvider>
+              <Toaster />
+              <Sonner />
+              <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
               />
-              <Route path="/my-downloads" element={<MyDownloadedList />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/manage-users" element={<Users />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="/chat-support/:ticketId" element={<ChatSupport />} />
-              <Route path="/faqs" element={<FAQs />} />
-              <Route path="/settings" element={<Settings />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TourProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/build-vais" element={<BuildVAIS />} />
+                  <Route path="/vais-results" element={<VAISResults />} />
+                  <Route path="/abm-lal" element={<ABMLAL />} />
+                  <Route path="/find-prospect" element={<FindProspect />} />
+                  <Route
+                    path="/prospect-results"
+                    element={<ProspectResults />}
+                  />
+                  <Route path="/build-campaign" element={<BuildCampaign />} />
+                  <Route
+                    path="/build-my-campaign"
+                    element={<BuildMyCampaign />}
+                  />
+                  <Route
+                    path="/campaign-overview/:id"
+                    element={<CampaignOverview />}
+                  />
+                  <Route path="/my-downloads" element={<MyDownloadedList />} />
+                  <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/users" element={<Users />} />
+                  <Route path="/manage-users" element={<Users />} />
+                  <Route path="/support" element={<Support />} />
+                  <Route
+                    path="/chat-support/:ticketId"
+                    element={<ChatSupport />}
+                  />
+                  <Route path="/faqs" element={<FAQs />} />
+                  <Route path="/settings" element={<Settings />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TourProvider>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </PersistGate>
+  </Provider>
 );
 
 // Handle HMR properly to avoid multiple createRoot calls
